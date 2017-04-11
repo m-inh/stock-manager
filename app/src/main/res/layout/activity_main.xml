@@ -5,28 +5,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.uet.stockmanager.activities.MainActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:id="@+id/tb_main_activity"
+        android:titleTextColor="@android:color/white"
+        android:minHeight="?attr/actionBarSize">
+
+    </android.support.v7.widget.Toolbar>
 
     <Button
         android:id="@+id/btn_product"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Product"/>
+        android:text="@string/product"/>
 
     <Button
         android:id="@+id/btn_sale"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Sale"/>
+        android:text="@string/sale"/>
 
     <Button
         android:id="@+id/btn_order"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Order"/>
+        android:text="@string/order"/>
 
     <Button
         android:id="@+id/btn_statistic"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Statistic"/>
+        android:text="@string/statistic"/>
 </LinearLayout>

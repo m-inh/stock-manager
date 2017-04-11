@@ -5,15 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.models.Product;
 
 import java.util.List;
-
-/**
- * Created by TooNies1810 on 4/6/17.
- */
 
 public class ProductAdapter extends BaseAdapter {
 
@@ -21,9 +18,10 @@ public class ProductAdapter extends BaseAdapter {
     private LayoutInflater lf;
     private List<Product> pList;
 
-    public ProductAdapter(Context context) {
+    public ProductAdapter(Context context, List<Product> pList) {
         this.context = context;
         lf = LayoutInflater.from(context);
+        this.pList = pList;
     }
 
     @Override
@@ -43,9 +41,27 @@ public class ProductAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        ViewHolder holder;
+
         if (convertView == null){
             convertView = lf.inflate(R.layout.item_product, null);
+            holder = new ViewHolder();
+            holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.tvCategory = (TextView) convertView.findViewById(R.id.tv_category);
+            holder.tvSale = (TextView) convertView.findViewById(R.id.tv_sale);
+            holder.tvQuantity = (TextView) convertView.findViewById(R.id.tv_quantity);
+            convertView.setTag(holder);
+        }else {
+            holder = (ViewHolder) convertView.getTag();
         }
+
+        Product product = this.pList.get(position);
+        holder.tvName.setText(product.getName());
+        holder.tvCategory.setText("Loại " + product.getCategory());
+        holder.tvQuantity.setText("Số Lượng: "+ product.getQuantity());
+        holder.tvSale.setText("Đã bán:");
+
         return convertView;
     }
 
@@ -55,5 +71,12 @@ public class ProductAdapter extends BaseAdapter {
 
     public List<Product> getpList() {
         return pList;
+    }
+
+    static class ViewHolder{
+        TextView tvName;
+        TextView tvCategory;
+        TextView tvSale;
+        TextView tvQuantity;
     }
 }

@@ -8,11 +8,7 @@ import com.uet.stockmanager.models.DaoSession;
 import org.greenrobot.greendao.AbstractDaoSession;
 import org.greenrobot.greendao.database.Database;
 
-/**
- * Created by TooNies1810 on 4/6/17.
- */
-
-public class AppController extends Application {
+public class  AppController extends Application {
 
     private DaoSession daoSession;
 

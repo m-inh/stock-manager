@@ -6,10 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.uet.stockmanager.R;
 
-/**
- * Created by TooNies1810 on 4/6/17.
- */
-
 public class SaleActivity extends AppCompatActivity{
 
     @Override
