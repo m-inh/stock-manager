@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
         ButterKnife.bind(this);
         btnProduct.setOnClickListener(this);
+        btnSale.setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(mIntent);
                 Log.i(TAG,"Product!!!");
                 break;
+            case  R.id.btn_sale:
+                Intent intentSale = new Intent(MainActivity.this,SaleActivity.class);
+                startActivity(intentSale);
+                Log.i(TAG,"Product!!!");
         }
     }
 }

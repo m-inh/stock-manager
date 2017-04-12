@@ -8,22 +8,21 @@
     android:paddingRight="16px">
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_name_sale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cocacola"
         android:textSize="@dimen/item_title"
         android:textStyle="bold" />
-
     <TextView
-        android:id="@+id/tv_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loại: Nước ngọt"
-        android:textSize="@dimen/item_subtitle" />
+        android:id="@+id/tv_sale_price"
+        android:text="Giá bán: 10000VND"
+        android:textSize="@dimen/item_subtitle"/>
 
     <TextView
-        android:id="@+id/tv_sale"
+        android:id="@+id/tv_sale_quanlity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Số lượng bán: 5"
@@ -33,7 +32,7 @@
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thời gian: 10:15 23/10/2017"
+        android:text="Thời gian bán: 10:15 23/10/2017"
         android:textSize="@dimen/item_subtitle" />
 
     <TextView

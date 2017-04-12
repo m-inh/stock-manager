@@ -73,7 +73,7 @@ public class ProductAdapter extends BaseAdapter {
         return pList;
     }
 
-    static class ViewHolder {
+    private static class ViewHolder {
         TextView tvName;
         TextView tvCategory;
         TextView tvQuantity;
