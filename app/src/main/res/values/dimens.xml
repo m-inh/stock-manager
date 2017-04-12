@@ -2,5 +2,6 @@
 <resources>
     <dimen name="item_title">24sp</dimen>
     <dimen name="item_subtitle">18sp</dimen>
+    <dimen name="padding_view">8dp</dimen>
 
 </resources>

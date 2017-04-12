@@ -23,23 +23,23 @@
         android:textSize="@dimen/item_subtitle" />
 
     <TextView
-        android:id="@+id/tv_sale"
+        android:id="@+id/tv_price_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đã bán: 30"
+        android:text="Giá nhập: 10000VND"
         android:textSize="@dimen/item_subtitle" />
 
     <TextView
         android:id="@+id/tv_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Số lượng còn lại: 20"
+        android:text="Số lượng: 20"
         android:textSize="@dimen/item_subtitle" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="12dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>

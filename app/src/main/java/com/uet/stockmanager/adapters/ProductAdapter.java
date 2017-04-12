@@ -44,23 +44,23 @@ public class ProductAdapter extends BaseAdapter {
 
         ViewHolder holder;
 
-        if (convertView == null){
+        if (convertView == null) {
             convertView = lf.inflate(R.layout.item_product, null);
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
             holder.tvCategory = (TextView) convertView.findViewById(R.id.tv_category);
-            holder.tvSale = (TextView) convertView.findViewById(R.id.tv_sale);
             holder.tvQuantity = (TextView) convertView.findViewById(R.id.tv_quantity);
+            holder.tvPrice = (TextView) convertView.findViewById(R.id.tv_price_product);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         Product product = this.pList.get(position);
         holder.tvName.setText(product.getName());
-        holder.tvCategory.setText("Loại " + product.getCategory());
-        holder.tvQuantity.setText("Số Lượng: "+ product.getQuantity());
-        holder.tvSale.setText("Đã bán:");
+        holder.tvCategory.setText("Loại: " + product.getCategory());
+        holder.tvQuantity.setText("Số Lượng: " + product.getQuantity());
+        holder.tvPrice.setText("Giá nhập: " + product.getPrice() + "VND");
 
         return convertView;
     }
@@ -73,10 +73,10 @@ public class ProductAdapter extends BaseAdapter {
         return pList;
     }
 
-    static class ViewHolder{
+    static class ViewHolder {
         TextView tvName;
         TextView tvCategory;
-        TextView tvSale;
         TextView tvQuantity;
+        TextView tvPrice;
     }
 }
