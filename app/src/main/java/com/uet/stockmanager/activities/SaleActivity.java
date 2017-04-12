@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.uet.stockmanager.R;
 
 public class SaleActivity extends AppCompatActivity{
+    // todo: add new sale
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -28,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductActivity extends AppCompatActivity{
+    // todo: update quanlity
+    // todo: edit user insert product id
 
     private static final String DIALOG_TITLE = "Add New Product";
 
@@ -50,9 +52,7 @@ public class ProductActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_back);
         toolbar.setTitle("Products");
-        toolbar.setTitleTextColor(Color.WHITE);
 
         pDao = ((AppController) getApplication()).getDaoSession().getProductDao();
 
@@ -76,6 +76,7 @@ public class ProductActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.menu_add_product:
                 final Dialog dialog = new Dialog(ProductActivity.this);
+
                 dialog.setContentView(R.layout.dialog_add_product);
                 dialog.setTitle(DIALOG_TITLE);
                 final EditText edtName = (EditText) dialog.findViewById(R.id.edt_add_product_name);
@@ -120,6 +121,10 @@ public class ProductActivity extends AppCompatActivity{
 
                     }
                 });
+
+
+
+
                 break;
             case android.R.id.home:
                 Intent mIntent = new Intent(ProductActivity.this, MainActivity.class);

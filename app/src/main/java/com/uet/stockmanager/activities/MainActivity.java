@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setSupportActionBar(toolBar);
         toolBar.setTitle("Stock Manager");
-        toolBar.setTitleTextColor(Color.WHITE);
-
     }
 
     private void initViews() {
