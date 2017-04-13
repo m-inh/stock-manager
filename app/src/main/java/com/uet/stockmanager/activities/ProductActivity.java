@@ -145,7 +145,7 @@ public class ProductActivity extends AppCompatActivity {
     private void addMoreProduct(Product product){
         pDao.update(product);
         productList.clear();
-        productList = pDao.queryBuilder().list();
+        productList.addAll(pDao.queryBuilder().list());
         productAdapter.notifyDataSetChanged();
     }
 
