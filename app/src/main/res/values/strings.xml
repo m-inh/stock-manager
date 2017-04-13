@@ -12,4 +12,7 @@
     <string name="add_product">Add Product</string>
     <string name="update">Update</string>
     <string name="add_more">Add More</string>
+    <string name="sale_name">Name</string>
+    <string name="time_sale">Time Sale</string>
+    <string name="add_sale">Add Sale</string>
 </resources>

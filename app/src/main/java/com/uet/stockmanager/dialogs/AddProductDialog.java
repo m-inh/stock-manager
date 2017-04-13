@@ -30,8 +30,6 @@ public class AddProductDialog extends Dialog {
     @BindView(R.id.btn_add_product) Button btnAddProduct;
     public AddProductDialog(@NonNull final Context context, @StyleRes int themeResId) {
         super(context, themeResId);
-
-
     }
 
     @Override

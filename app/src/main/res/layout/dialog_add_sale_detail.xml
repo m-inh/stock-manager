@@ -11,10 +11,10 @@
         android:textColorHint="@android:color/darker_gray">
 
         <EditText
-            android:id="@+id/edt_add_product_name"
+            android:id="@+id/edt_add_sale_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/product_name" />
+            android:hint="@string/sale_name" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -23,10 +23,11 @@
         android:textColorHint="@android:color/darker_gray">
 
         <EditText
-            android:id="@+id/edt_add_product_category"
+            android:id="@+id/edt_add_product_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/product_category" />
+            android:hint="@string/product_id"
+            android:inputType="phone" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -35,7 +36,7 @@
         android:textColorHint="@android:color/darker_gray">
 
         <EditText
-            android:id="@+id/edt_add_product_quanlity"
+            android:id="@+id/edt_add_sale_quanlity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/product_quantity" />
@@ -47,21 +48,46 @@
         android:textColorHint="@android:color/darker_gray">
 
         <EditText
-            android:id="@+id/edt_add_product_price"
+            android:id="@+id/edt_add_sale_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/product_price" />
     </android.support.design.widget.TextInputLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@android:color/darker_gray">
+
+            <EditText
+                android:id="@+id/edt_add_time_sale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/time_sale" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:id="@+id/btn_time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent" />
+
+    </FrameLayout>
+
 
     <Button
-        android:id="@+id/btn_add_product"
+        android:id="@+id/btn_add_sale"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:text="@string/add_product" />
+        android:text="@string/add_sale"
+        android:textColor="@android:color/white" />
+
 
 </LinearLayout>
