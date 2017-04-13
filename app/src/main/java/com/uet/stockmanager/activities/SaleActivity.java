@@ -20,6 +20,7 @@ import android.widget.ListView;
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.adapters.SaleAdapter;
 import com.uet.stockmanager.application.AppController;
+import com.uet.stockmanager.common.CommonVls;
 import com.uet.stockmanager.dialogs.AddSaleDialog;
 import com.uet.stockmanager.models.Product;
 import com.uet.stockmanager.models.ProductDao;
@@ -33,9 +34,6 @@ import butterknife.ButterKnife;
 
 public class SaleActivity extends AppCompatActivity {
 
-    private static final String ADD_NEW_SALE = "new sale";
-    private static final String ADD_QUANLITY_SALE = "quanlity sale";
-    private static final String ADD_PRODUCT_ID_SALE = "product id";
     private static final String TAG = "SaleActivity";
 
     @BindView(R.id.tb_sale_activity)
@@ -68,7 +66,7 @@ public class SaleActivity extends AppCompatActivity {
         lvListSale.setAdapter(saleAdapter);
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(ADD_NEW_SALE);
+        filter.addAction(CommonVls.SALE_ACTIVITY_ADD_NEW_SALE);
 
         this.registerReceiver(myBroadcast,filter);
 
@@ -113,16 +111,17 @@ public class SaleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.unbindService((ServiceConnection) this.myBroadcast);
+        this.unregisterReceiver(this.myBroadcast);
     }
 
     private class MyBroadcast extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ADD_NEW_SALE)){
-                long productID = intent.getLongExtra(ADD_PRODUCT_ID_SALE,1);
-                int quanlity = intent.getIntExtra(ADD_QUANLITY_SALE,1);
+            if(intent.getAction().equals(CommonVls.SALE_ACTIVITY_ADD_NEW_SALE)){
+                long productID = intent.getLongExtra(CommonVls.SALE_ACTIVITY_ADD_PRODUCT_ID_SALE,1);
+                int quanlity = intent.getIntExtra(CommonVls.SALE_ACTIVITY_ADD_QUANLITY_SALE,1);
+                long timeSale = intent.getIntExtra(CommonVls.SALE_ACTIVITY_ADD_TIME_SALE,1);
 
                 Sale sale = new Sale();
                 sale.setQuanlity(quanlity);
@@ -134,7 +133,7 @@ public class SaleActivity extends AppCompatActivity {
                 String name = p.getName();
                 sale.setPrice(totalPrice);
                 sale.setName(name);
-                sale.setTimestamp(System.currentTimeMillis());
+                sale.setTimestamp(timeSale);
                 sale.setProductId(productID);
                 insertSale(sale);
 

@@ -13,14 +13,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.uet.stockmanager.R;
+import com.uet.stockmanager.common.CommonVls;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditProductDialog extends Dialog{
-
-    public static final String UPDATE_PRODUCT = "update_product";
-    public static final String ADD_MORE = "add_more";
 
     @BindView(R.id.edt_edit_product_quanlity) EditText edtEditText;
     @BindView(R.id.btn_edit_product) Button btnUpdateEdited;
@@ -42,8 +40,8 @@ public class EditProductDialog extends Dialog{
                 if(edtEditText.getText().toString().equals("")){
                     Toast.makeText(getContext(),"Quanlity cann't be empty!!!", Toast.LENGTH_SHORT);
                 }
-                Intent mIntent = new Intent(UPDATE_PRODUCT);
-                mIntent.putExtra(ADD_MORE,String.valueOf(edtEditText.getText().toString()));
+                Intent mIntent = new Intent(CommonVls.PRODUCT_ACTIVITY_UPDATE_PRODUCT);
+                mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_MORE,String.valueOf(edtEditText.getText().toString()));
                 getContext().sendBroadcast(mIntent);
                 dismiss();
             }
