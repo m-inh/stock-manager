@@ -51,6 +51,8 @@ public class StatisticActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitle("Statistic");
 
         initViews();
@@ -58,9 +60,9 @@ public class StatisticActivity extends AppCompatActivity {
 
     private void initViews() {
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
-        list.add(new LineChartItem(generateDataLine(0 + 1), getApplicationContext()));
-        list.add(new BarChartItem(generateDataBar(1 + 1), getApplicationContext()));
-        list.add(new PieChartItem(generateDataPie(2 + 1), getApplicationContext()));
+        list.add(new LineChartItem(generateDataLine(1), getApplicationContext()));
+        list.add(new BarChartItem(generateDataBar(2), getApplicationContext()));
+        list.add(new PieChartItem(generateDataPie(3), getApplicationContext()));
 
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lvChart.setAdapter(cda);
