@@ -19,8 +19,8 @@ import butterknife.ButterKnife;
 
 public class EditProductDialog extends Dialog{
 
-    private static final String UPDATE_PRODUCT = "update product";
-    private static final String ADD_MORE = "add more";
+    public static final String UPDATE_PRODUCT = "update_product";
+    public static final String ADD_MORE = "add_more";
 
     @BindView(R.id.edt_edit_product_quanlity) EditText edtEditText;
     @BindView(R.id.btn_edit_product) Button btnUpdateEdited;

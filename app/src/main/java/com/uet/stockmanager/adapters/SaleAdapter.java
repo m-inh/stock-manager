@@ -13,13 +13,13 @@ import com.uet.stockmanager.models.Sale;
 
 import java.util.List;
 
-public class SaleAdapter extends BaseAdapter{
+public class SaleAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater lf;
     private List<Sale> saleList;
 
-    public SaleAdapter(Context context, List<Sale> saleList){
+    public SaleAdapter(Context context, List<Sale> saleList) {
         this.context = context;
         this.saleList = saleList;
         lf = LayoutInflater.from(context);
@@ -44,17 +44,23 @@ public class SaleAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
-            convertView = lf.inflate(R.layout.item_sale,null);
+            convertView = lf.inflate(R.layout.item_sale, null);
             holder.tvName = (TextView) convertView.findViewById(R.id.tv_name_sale);
             holder.tvQuantity = (TextView) convertView.findViewById(R.id.tv_sale_quanlity);
             holder.tvPrice = (TextView) convertView.findViewById(R.id.tv_sale_price);
             holder.tvTimeStamp = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (SaleAdapter.ViewHolder) convertView.getTag();
         }
+
+        Sale sale = saleList.get(position);
+        holder.tvTimeStamp.setText("Thời gian bán: " + sale.getTimestamp());
+        holder.tvQuantity.setText("Số lượng bán: " + sale.getQuanlity());
+        holder.tvPrice.setText("Tổng giá bán: " + sale.getPrice() + "VND");
+        holder.tvName.setText(String.valueOf(sale.getName()));
 
         return convertView;
     }

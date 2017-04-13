@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,9 +40,7 @@ public class ProductActivity extends AppCompatActivity {
     private static final String ADD_CATEGORY_PRODUCT = "category";
     private static final String ADD_PRICE_PRODUCT = "price";
     private static final String ADD_QUANLITY_PRODUCT = "quanlity";
-    private static final String UPDATE_PRODUCT = "update product";
     private static final String TAG = "ProductActivity";
-    private static final String ADD_MORE = "add more";
 
     @BindView(R.id.lv_main)
     ListView lvMain;
@@ -79,10 +76,12 @@ public class ProductActivity extends AppCompatActivity {
                 editProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
                 editProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 long idQuery = position + 1;
-                Product product = pDao.queryBuilder().where(ProductDao.Properties.Id.eq(idQuery)).unique();
+                Product product = pDao.load(idQuery);
                 Log.i(TAG, "Product name: " + product.getName());
-                Toast.makeText(ProductActivity.this,"Add more " + product.getName(),Toast.LENGTH_LONG).show();
+                Toast.makeText(ProductActivity.this, "Add more " + product.getName(), Toast.LENGTH_LONG).show();
                 productTemp = product;
+
+                Log.i(TAG,productTemp.getName());
                 editProductDialog.setTitle("");
                 editProductDialog.show();
             }
@@ -91,7 +90,7 @@ public class ProductActivity extends AppCompatActivity {
         //add new product
         IntentFilter filter = new IntentFilter();
         filter.addAction(ADD_NEW_PRODUCT);
-        filter.addAction(UPDATE_PRODUCT);
+        filter.addAction(EditProductDialog.UPDATE_PRODUCT);
         this.registerReceiver(addNewProduct, filter);
     }
 
@@ -131,9 +130,22 @@ public class ProductActivity extends AppCompatActivity {
         this.unbindService((ServiceConnection) this.addNewProduct);
     }
 
-    private void updateListProduct(Product product) {
+    private void insertListProduct(Product product) {
         pDao.insert(product);
-        productList.add(product);
+
+        updateListProduct();
+    }
+
+    private void updateListProduct() {
+        productList.clear();
+        productList.addAll(pDao.queryBuilder().list());
+        productAdapter.notifyDataSetChanged();
+    }
+
+    private void addMoreProduct(Product product){
+        pDao.update(product);
+        productList.clear();
+        productList = pDao.queryBuilder().list();
         productAdapter.notifyDataSetChanged();
     }
 
@@ -153,15 +165,13 @@ public class ProductActivity extends AppCompatActivity {
                 product.setPrice(price);
                 product.setQuantity(quanlity);
 
-                updateListProduct(product);
+                insertListProduct(product);
             }
-            if (intent.getAction().equals(UPDATE_PRODUCT)) {
-                int quanlity = intent.getIntExtra(ADD_MORE,1);
+            if (intent.getAction().equals(EditProductDialog.UPDATE_PRODUCT)) {
+                int quanlity = Integer.parseInt(intent.getStringExtra(EditProductDialog.ADD_MORE));
                 productTemp.setQuantity(productTemp.getQuantity() + quanlity);
-                pDao.update(productTemp);
-                int id = (int) (productTemp.getId() - 1);
-                productList.get(id).setQuantity(productTemp.getQuantity() + quanlity);
-                productAdapter.notifyDataSetChanged();
+                addMoreProduct(productTemp);
+
             }
 
         }

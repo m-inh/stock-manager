@@ -10,8 +10,8 @@ import org.greenrobot.greendao.annotation.NotNull;
 @Entity
 public class Sale {
 
-    @Id
-    private long id;
+    @Id(autoincrement = true)
+    private Long id;
 
     private Long timestamp;
     private String name;
@@ -19,7 +19,7 @@ public class Sale {
     private int price;
 
     private long productId;
-    
+
     @ToOne(joinProperty = "productId")
     private Product product;
 
@@ -31,8 +31,11 @@ public class Sale {
     @Generated(hash = 595863298)
     private transient SaleDao myDao;
 
-    @Generated(hash = 498712541)
-    public Sale(long id, Long timestamp, String name, int quanlity, int price,
+    @Generated(hash = 587652864)
+    private transient Long product__resolvedKey;
+
+    @Generated(hash = 316749745)
+    public Sale(Long id, Long timestamp, String name, int quanlity, int price,
             long productId) {
         this.id = id;
         this.timestamp = timestamp;
@@ -46,11 +49,11 @@ public class Sale {
     public Sale() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -93,9 +96,6 @@ public class Sale {
     public void setProductId(long productId) {
         this.productId = productId;
     }
-
-    @Generated(hash = 587652864)
-    private transient Long product__resolvedKey;
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 926515087)
@@ -172,4 +172,5 @@ public class Sale {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getSaleDao() : null;
     }
+
 }
