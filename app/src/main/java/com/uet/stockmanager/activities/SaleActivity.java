@@ -83,8 +83,7 @@ public class SaleActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent mIntent = new Intent(SaleActivity.this, MainActivity.class);
-                startActivity(mIntent);
+                finish();
                 break;
             case R.id.menu_add_sale:
                 AddSaleDialog addSaleDialog = new AddSaleDialog(this, R.style.PauseDialogAnimation);
@@ -121,7 +120,7 @@ public class SaleActivity extends AppCompatActivity {
             if(intent.getAction().equals(CommonVls.SALE_ACTIVITY_ADD_NEW_SALE)){
                 long productID = intent.getLongExtra(CommonVls.SALE_ACTIVITY_ADD_PRODUCT_ID_SALE,1);
                 int quanlity = intent.getIntExtra(CommonVls.SALE_ACTIVITY_ADD_QUANLITY_SALE,1);
-                long timeSale = intent.getIntExtra(CommonVls.SALE_ACTIVITY_ADD_TIME_SALE,1);
+                long timeSale = intent.getLongExtra(CommonVls.SALE_ACTIVITY_ADD_TIME_SALE,1);
 
                 Sale sale = new Sale();
                 sale.setQuanlity(quanlity);
