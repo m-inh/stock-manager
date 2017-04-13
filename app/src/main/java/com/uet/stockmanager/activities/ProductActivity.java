@@ -85,7 +85,7 @@ public class ProductActivity extends AppCompatActivity {
         //add new product
         IntentFilter filter = new IntentFilter();
         filter.addAction(CommonVls.PRODUCT_ACTIVITY_ADD_NEW_PRODUCT);
-        filter.addAction(CommonVls.PRODUCT_ACTIVITY_ADD_MORE);
+        filter.addAction(CommonVls.PRODUCT_ACTIVITY_UPDATE_PRODUCT);
         this.registerReceiver(addNewProduct, filter);
     }
 
@@ -107,8 +107,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 break;
             case android.R.id.home:
-                Intent mIntent = new Intent(ProductActivity.this, MainActivity.class);
-                startActivity(mIntent);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
