@@ -58,7 +58,7 @@ public class SaleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setTitle("Sale");
+        getSupportActionBar().setTitle("Sale");
 
         saleDao = ((AppController) getApplication()).getDaoSession().getSaleDao();
         saleList = saleDao.queryBuilder().list();

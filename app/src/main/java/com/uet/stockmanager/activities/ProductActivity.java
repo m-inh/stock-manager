@@ -59,7 +59,7 @@ public class ProductActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setTitle("Products");
+        getSupportActionBar().setTitle("Products");
 
         pDao = ((AppController) getApplication()).getDaoSession().getProductDao();
         productList = pDao.queryBuilder().list();

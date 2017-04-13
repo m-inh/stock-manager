@@ -16,27 +16,28 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <Button
-        android:id="@+id/btn_product"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="@string/product"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btn_product"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/product"/>
 
-    <Button
-        android:id="@+id/btn_sale"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="@string/sale"/>
+        <Button
+            android:id="@+id/btn_sale"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/sale"/>
 
-    <Button
-        android:id="@+id/btn_order"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="@string/order"/>
+        <Button
+            android:id="@+id/btn_statistic"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/statistic"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_statistic"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="@string/statistic"/>
 </LinearLayout>
