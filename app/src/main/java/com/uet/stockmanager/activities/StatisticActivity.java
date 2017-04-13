@@ -1,11 +1,14 @@
 package com.uet.stockmanager.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -28,6 +31,7 @@ import com.uet.stockmanager.charts.BarChartItem;
 import com.uet.stockmanager.charts.ChartItem;
 import com.uet.stockmanager.charts.LineChartItem;
 import com.uet.stockmanager.charts.PieChartItem;
+import com.uet.stockmanager.dialogs.AddProductDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +70,16 @@ public class StatisticActivity extends AppCompatActivity {
 
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lvChart.setAdapter(cda);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /** adapter that supports 3 different item types */
