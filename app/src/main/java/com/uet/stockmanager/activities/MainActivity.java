@@ -20,13 +20,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @BindView(R.id.btn_product) Button btnProduct;
-    @BindView(R.id.btn_order) Button btnOrder;
-    @BindView(R.id.btn_sale) Button btnSale;
-    @BindView(R.id.btn_statistic) Button btnStatistic;
-    @BindView(R.id.tb_main_activity) Toolbar toolBar;
+    @BindView(R.id.btn_product)
+    Button btnProduct;
+    @BindView(R.id.btn_order)
+    Button btnOrder;
+    @BindView(R.id.btn_sale)
+    Button btnSale;
+    @BindView(R.id.btn_statistic)
+    Button btnStatistic;
+    @BindView(R.id.tb_main_activity)
+    Toolbar toolBar;
 
     private static final String TAG = "MainActivity";
 
@@ -44,20 +49,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         btnProduct.setOnClickListener(this);
         btnSale.setOnClickListener(this);
+        btnStatistic.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_product:
-                Intent mIntent = new Intent(MainActivity.this,ProductActivity.class);
+                Intent mIntent = new Intent(MainActivity.this, ProductActivity.class);
                 startActivity(mIntent);
-                Log.i(TAG,"Product!!!");
+                Log.i(TAG, "Product!!!");
                 break;
-            case  R.id.btn_sale:
-                Intent intentSale = new Intent(MainActivity.this,SaleActivity.class);
+            case R.id.btn_sale:
+                Intent intentSale = new Intent(MainActivity.this, SaleActivity.class);
                 startActivity(intentSale);
-                Log.i(TAG,"Product!!!");
+                Log.i(TAG, "Product!!!");
+                break;
+            case R.id.btn_statistic:
+                Intent i = new Intent(MainActivity.this, StatisticActivity.class);
+                startActivity(i);
+                break;
         }
     }
 }
