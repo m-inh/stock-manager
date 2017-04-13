@@ -58,12 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_product:
                 Intent mIntent = new Intent(MainActivity.this, ProductActivity.class);
                 startActivity(mIntent);
-                Log.i(TAG, "Product!!!");
                 break;
             case R.id.btn_sale:
                 Intent intentSale = new Intent(MainActivity.this, SaleActivity.class);
                 startActivity(intentSale);
-                Log.i(TAG, "Product!!!");
                 break;
             case R.id.btn_statistic:
                 Intent i = new Intent(MainActivity.this, StatisticActivity.class);

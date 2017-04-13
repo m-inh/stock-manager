@@ -28,6 +28,7 @@ public class AddProductDialog extends Dialog {
     @BindView(R.id.edt_add_product_quanlity) EditText edtQuanlity;
     @BindView(R.id.edt_add_product_price) EditText edtPrice;
     @BindView(R.id.btn_add_product) Button btnAddProduct;
+
     public AddProductDialog(@NonNull final Context context, @StyleRes int themeResId) {
         super(context, themeResId);
     }
@@ -37,7 +38,8 @@ public class AddProductDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_add_product);
 
-        initView();
+        ButterKnife.bind(AddProductDialog.this);
+
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,14 +69,11 @@ public class AddProductDialog extends Dialog {
                 mIntent.putExtra(ADD_CATEGORY_PRODUCT,category);
                 mIntent.putExtra(ADD_PRICE_PRODUCT,price);
                 mIntent.putExtra(ADD_QUANLITY_PRODUCT,quantity);
+
                 getContext().sendBroadcast(mIntent);
 
                 dismiss();
             }
         });
-    }
-
-    private void initView(){
-        ButterKnife.bind(AddProductDialog.this);
     }
 }

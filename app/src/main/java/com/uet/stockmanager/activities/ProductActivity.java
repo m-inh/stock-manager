@@ -58,7 +58,7 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        initViews();
+        ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +81,7 @@ public class ProductActivity extends AppCompatActivity {
                 Toast.makeText(ProductActivity.this, "Add more " + product.getName(), Toast.LENGTH_LONG).show();
                 productTemp = product;
 
-                Log.i(TAG,productTemp.getName());
+                Log.i(TAG, productTemp.getName());
                 editProductDialog.setTitle("");
                 editProductDialog.show();
             }
@@ -92,11 +92,6 @@ public class ProductActivity extends AppCompatActivity {
         filter.addAction(ADD_NEW_PRODUCT);
         filter.addAction(EditProductDialog.UPDATE_PRODUCT);
         this.registerReceiver(addNewProduct, filter);
-    }
-
-    private void initViews() {
-
-        ButterKnife.bind(this);
     }
 
     @Override
@@ -127,7 +122,8 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.unbindService((ServiceConnection) this.addNewProduct);
+
+        unregisterReceiver(addNewProduct);
     }
 
     private void insertListProduct(Product product) {
@@ -136,14 +132,13 @@ public class ProductActivity extends AppCompatActivity {
         updateListProduct();
     }
 
-    private void updateListProduct() {
-        productList.clear();
-        productList.addAll(pDao.queryBuilder().list());
-        productAdapter.notifyDataSetChanged();
+    private void addMoreProduct(Product product) {
+        pDao.update(product);
+
+        updateListProduct();
     }
 
-    private void addMoreProduct(Product product){
-        pDao.update(product);
+    private void updateListProduct() {
         productList.clear();
         productList.addAll(pDao.queryBuilder().list());
         productAdapter.notifyDataSetChanged();
@@ -167,6 +162,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 insertListProduct(product);
             }
+
             if (intent.getAction().equals(EditProductDialog.UPDATE_PRODUCT)) {
                 int quanlity = Integer.parseInt(intent.getStringExtra(EditProductDialog.ADD_MORE));
                 productTemp.setQuantity(productTemp.getQuantity() + quanlity);
