@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.adapters.ProductAdapter;
 import com.uet.stockmanager.application.AppController;
+import com.uet.stockmanager.common.CommonVls;
 import com.uet.stockmanager.dialogs.AddProductDialog;
 import com.uet.stockmanager.dialogs.EditProductDialog;
 import com.uet.stockmanager.models.Product;
@@ -34,12 +35,7 @@ import butterknife.ButterKnife;
 
 public class ProductActivity extends AppCompatActivity {
 
-    private static final String DIALOG_TITLE = "Add New Product";
-    private static final String ADD_NEW_PRODUCT = "update";
-    private static final String ADD_NAME_PRODUCT = "name";
-    private static final String ADD_CATEGORY_PRODUCT = "category";
-    private static final String ADD_PRICE_PRODUCT = "price";
-    private static final String ADD_QUANLITY_PRODUCT = "quanlity";
+
     private static final String TAG = "ProductActivity";
 
     @BindView(R.id.lv_main)
@@ -75,8 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                 EditProductDialog editProductDialog = new EditProductDialog(ProductActivity.this, R.style.PauseDialogAnimation);
                 editProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
                 editProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                long idQuery = position + 1;
-                Product product = pDao.load(idQuery);
+                Product product = productList.get(position);
                 Log.i(TAG, "Product name: " + product.getName());
                 Toast.makeText(ProductActivity.this, "Add more " + product.getName(), Toast.LENGTH_LONG).show();
                 productTemp = product;
@@ -89,8 +84,8 @@ public class ProductActivity extends AppCompatActivity {
 
         //add new product
         IntentFilter filter = new IntentFilter();
-        filter.addAction(ADD_NEW_PRODUCT);
-        filter.addAction(EditProductDialog.UPDATE_PRODUCT);
+        filter.addAction(CommonVls.PRODUCT_ACTIVITY_ADD_NEW_PRODUCT);
+        filter.addAction(CommonVls.PRODUCT_ACTIVITY_ADD_MORE);
         this.registerReceiver(addNewProduct, filter);
     }
 
@@ -107,7 +102,7 @@ public class ProductActivity extends AppCompatActivity {
                 AddProductDialog addProductDialog = new AddProductDialog(this, R.style.PauseDialogAnimation);
                 addProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
                 addProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                addProductDialog.setTitle(DIALOG_TITLE);
+                addProductDialog.setTitle("");
                 addProductDialog.show();
 
                 break;
@@ -148,11 +143,11 @@ public class ProductActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ADD_NEW_PRODUCT)) {
-                String name = intent.getStringExtra(ADD_NAME_PRODUCT);
-                String category = intent.getStringExtra(ADD_CATEGORY_PRODUCT);
-                int price = intent.getIntExtra(ADD_PRICE_PRODUCT, 1);
-                int quanlity = intent.getIntExtra(ADD_QUANLITY_PRODUCT, 1);
+            if (intent.getAction().equals(CommonVls.PRODUCT_ACTIVITY_ADD_NEW_PRODUCT)) {
+                String name = intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_NAME_PRODUCT);
+                String category = intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_CATEGORY_PRODUCT);
+                int price = intent.getIntExtra(CommonVls.PRODUCT_ACTIVITY_ADD_PRICE_PRODUCT, 1);
+                int quanlity = intent.getIntExtra(CommonVls.PRODUCT_ACTIVITY_ADD_QUANLITY_PRODUCT, 1);
 
                 Product product = new Product();
                 product.setName(name);
@@ -163,8 +158,8 @@ public class ProductActivity extends AppCompatActivity {
                 insertListProduct(product);
             }
 
-            if (intent.getAction().equals(EditProductDialog.UPDATE_PRODUCT)) {
-                int quanlity = Integer.parseInt(intent.getStringExtra(EditProductDialog.ADD_MORE));
+            if (intent.getAction().equals(CommonVls.PRODUCT_ACTIVITY_UPDATE_PRODUCT)) {
+                int quanlity = Integer.parseInt(intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_MORE));
                 productTemp.setQuantity(productTemp.getQuantity() + quanlity);
                 addMoreProduct(productTemp);
 

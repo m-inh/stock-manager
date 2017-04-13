@@ -12,16 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.uet.stockmanager.R;
+import com.uet.stockmanager.common.CommonVls;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddProductDialog extends Dialog {
-    private static final String UPDATE_DATABASE = "update";
-    private static final String ADD_NAME_PRODUCT = "name";
-    private static final String ADD_CATEGORY_PRODUCT = "category";
-    private static final String ADD_PRICE_PRODUCT = "price";
-    private static final String ADD_QUANLITY_PRODUCT = "quanlity";
 
     @BindView(R.id.edt_add_product_name) EditText edtName;
     @BindView(R.id.edt_add_product_category) EditText edtCategory;
@@ -64,11 +60,11 @@ public class AddProductDialog extends Dialog {
                 int price = Integer.parseInt(edtPrice.getText().toString());
                 int quantity = Integer.parseInt(edtQuanlity.getText().toString());
 
-                Intent mIntent = new Intent(UPDATE_DATABASE);
-                mIntent.putExtra(ADD_NAME_PRODUCT,name);
-                mIntent.putExtra(ADD_CATEGORY_PRODUCT,category);
-                mIntent.putExtra(ADD_PRICE_PRODUCT,price);
-                mIntent.putExtra(ADD_QUANLITY_PRODUCT,quantity);
+                Intent mIntent = new Intent(CommonVls.PRODUCT_ACTIVITY_ADD_NEW_PRODUCT);
+                mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_NAME_PRODUCT,name);
+                mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_CATEGORY_PRODUCT,category);
+                mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_PRICE_PRODUCT,price);
+                mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_QUANLITY_PRODUCT,quantity);
 
                 getContext().sendBroadcast(mIntent);
 

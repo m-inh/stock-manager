@@ -18,22 +18,15 @@ import android.widget.Toast;
 
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.application.AppController;
+import com.uet.stockmanager.common.CommonVls;
 import com.uet.stockmanager.models.Product;
 import com.uet.stockmanager.models.ProductDao;
-import com.uet.stockmanager.models.Sale;
-
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class AddSaleDialog extends Dialog {
 
-    private static final String ADD_NEW_SALE = "new sale";
-    private static final String ADD_TIME_SALE = "time sale";
-    private static final String ADD_QUANLITY_SALE = "quanlity sale";
-    private static final String ADD_PRODUCT_ID_SALE = "product id";
     private static final String TAG = "AddSaleDialog";
 
     @BindView(R.id.edt_add_product_id) EditText edtProductID;
@@ -88,10 +81,11 @@ public class AddSaleDialog extends Dialog {
                     productDao.update(p);
                 }
 
-                Intent mIntent = new Intent(ADD_NEW_SALE);
-                mIntent.putExtra(ADD_TIME_SALE,timeMilis);
-                mIntent.putExtra(ADD_QUANLITY_SALE,quantity);
-                mIntent.putExtra(ADD_PRODUCT_ID_SALE,productID);
+                Intent mIntent = new Intent(CommonVls.SALE_ACTIVITY_ADD_NEW_SALE);
+                timeMilis = System.currentTimeMillis();
+                mIntent.putExtra(CommonVls.SALE_ACTIVITY_ADD_TIME_SALE,timeMilis);
+                mIntent.putExtra(CommonVls.SALE_ACTIVITY_ADD_QUANLITY_SALE,quantity);
+                mIntent.putExtra(CommonVls.SALE_ACTIVITY_ADD_PRODUCT_ID_SALE,productID);
                 getContext().sendBroadcast(mIntent);
 
                 dismiss();
