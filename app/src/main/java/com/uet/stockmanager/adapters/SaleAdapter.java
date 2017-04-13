@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.models.Sale;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class SaleAdapter extends BaseAdapter {
@@ -57,12 +59,21 @@ public class SaleAdapter extends BaseAdapter {
         }
 
         Sale sale = saleList.get(position);
-        holder.tvTimeStamp.setText("Thời gian bán: " + sale.getTimestamp());
+        holder.tvTimeStamp.setText("Thời gian bán: " + getDate(sale.getTimestamp(),"hh:mm dd/MM/yyyy"));
         holder.tvQuantity.setText("Số lượng bán: " + sale.getQuanlity());
         holder.tvPrice.setText("Tổng giá bán: " + sale.getPrice() + "VND");
         holder.tvName.setText(String.valueOf(sale.getName()));
 
         return convertView;
+    }
+
+    public static String getDate(long milliSeconds, String dateFormat)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
     private static class ViewHolder {

@@ -27,6 +27,8 @@ import com.uet.stockmanager.models.ProductDao;
 import com.uet.stockmanager.models.Sale;
 import com.uet.stockmanager.models.SaleDao;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -112,6 +114,7 @@ public class SaleActivity extends AppCompatActivity {
         super.onDestroy();
         this.unregisterReceiver(this.myBroadcast);
     }
+
 
     private class MyBroadcast extends BroadcastReceiver{
 

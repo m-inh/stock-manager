@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.btn_product)
     Button btnProduct;
-    @BindView(R.id.btn_order)
-    Button btnOrder;
     @BindView(R.id.btn_sale)
     Button btnSale;
     @BindView(R.id.btn_statistic)
