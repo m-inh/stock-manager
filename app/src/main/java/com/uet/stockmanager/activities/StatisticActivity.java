@@ -38,6 +38,8 @@ import com.uet.stockmanager.charts.ChartItem;
 import com.uet.stockmanager.charts.LineChartItem;
 import com.uet.stockmanager.charts.PieChartItem;
 import com.uet.stockmanager.dialogs.AddProductDialog;
+import com.uet.stockmanager.models.Product;
+import com.uet.stockmanager.models.ProductDao;
 import com.uet.stockmanager.models.Sale;
 import com.uet.stockmanager.models.SaleDao;
 
@@ -54,11 +56,14 @@ import butterknife.ButterKnife;
 public class StatisticActivity extends AppCompatActivity {
 
     private static final String TAG = "StatisticActivity";
+
     @BindView(R.id.lv_main)
     ListView lvChart;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    private SaleDao saleDao;
+    private ProductDao pDao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +76,9 @@ public class StatisticActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Thống kê");
+
+        saleDao = ((AppController) getApplication()).getDaoSession().getSaleDao();
+        pDao = ((AppController) getApplication()).getDaoSession().getProductDao();
 
         // init chart before add any data to it
         Utils.init(this);
@@ -98,7 +106,9 @@ public class StatisticActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /** adapter that supports 3 different item types */
+    /**
+     * adapter that supports 3 different item types
+     */
     private class ChartDataAdapter extends ArrayAdapter<ChartItem> {
 
         public ChartDataAdapter(Context context, List<ChartItem> objects) {
@@ -145,7 +155,7 @@ public class StatisticActivity extends AppCompatActivity {
         ArrayList<Entry> e2 = new ArrayList<Entry>();
 
         for (int i = 1; i <= 12; i++) {
-            e2.add(new Entry(i, e1.get(i-1).getY() - 30));
+            e2.add(new Entry(i, e1.get(i - 1).getY() - 30));
         }
 
         LineDataSet d2 = new LineDataSet(e2, "New DataSet " + cnt + ", (2)");
@@ -193,33 +203,47 @@ public class StatisticActivity extends AppCompatActivity {
      * @return
      */
     private PieData generateDataPie(int cnt) {
-        // todo: query data from db
-        SaleDao saleDao = ((AppController)getApplication()).getDaoSession().getSaleDao();
-        //List<Sale> saleList = saleDao.queryRawCreate("SELECT PRODUCT_ID, SUM(PRICE) FROM SALE GROUP BY PRODUCT_ID").list();
-        Database db = ((AppController)getApplication()).getDaoSession().getDatabase();
-        Cursor cursor = db.rawQuery("SELECT PRODUCT_ID, SUM(PRICE) FROM SALE GROUP BY PRODUCT_ID ORDER BY PRICE DESC",new String[]{});
+        Database db = ((AppController) getApplication()).getDaoSession().getDatabase();
+        Cursor cursor = db.rawQuery("SELECT PRODUCT_ID, SUM(PRICE) AS total_price FROM SALE GROUP BY PRODUCT_ID ORDER BY total_price DESC", new String[]{});
+
+        int total_price_index = cursor.getColumnIndex("total_price");
+        int product_id_index = cursor.getColumnIndex("PRODUCT_ID");
+
+        long totalPrice = 0;
+        long priceTop1 = 0;
+        long priceTop2 = 0;
+        long priceTop3 = 0;
 
         cursor.moveToFirst();
-        long totalPrice = 0;
-        while (cursor.isAfterLast() == false){
-            totalPrice += cursor.getLong(1);
+        while (!cursor.isAfterLast()) {
+            totalPrice += cursor.getLong(total_price_index);
+
             cursor.moveToNext();
         }
-        cursor.moveToFirst();
-        Log.i(TAG,"Tổng bán ra: " + totalPrice + " (VND)");
+
+        Log.i(TAG, "Tổng bán ra: " + totalPrice + " (VND)");
 
         cursor.moveToFirst();
-        String nameTop1 = saleDao.load(cursor.getLong(0)).getName();
-        long priceTop1 = cursor.getLong(1);
-        Log.i(TAG,"Top 1: " + nameTop1 + " (VND)");
+
+        Product p_top_1 = pDao.load(cursor.getLong(product_id_index));
+        String nameTop1 = p_top_1.getName();
+        priceTop1 = cursor.getLong(total_price_index);
+        Log.i(TAG, "Top 1: " + nameTop1);
+        Log.i(TAG, "Top 1: " + priceTop1 + " (VND)");
+
         cursor.moveToNext();
-        String nameTop2 = saleDao.load(cursor.getLong(0)).getName();
-        long priceTop2 = cursor.getLong(1);
-        Log.i(TAG,"Top 2: " + priceTop2 + " (VND)");
+        Product p_top_2 = pDao.load(cursor.getLong(product_id_index));
+        String nameTop2 = p_top_2.getName();
+        priceTop2 = cursor.getLong(total_price_index);
+        Log.i(TAG, "Top 2: " + nameTop2);
+        Log.i(TAG, "Top 2: " + priceTop2 + " (VND)");
+
         cursor.moveToNext();
-        String nameTop3 = saleDao.load(cursor.getLong(0)).getName();
-        long priceTop3 = cursor.getLong(1);
-        Log.i(TAG,"Top 3: " + priceTop3 + " (VND)");
+        Product p_top_3 = pDao.load(cursor.getLong(product_id_index));
+        String nameTop3 = p_top_3.getName();
+        priceTop3 = cursor.getLong(total_price_index);
+        Log.i(TAG, "Top 3: " + nameTop3);
+        Log.i(TAG, "Top 3: " + priceTop3 + " (VND)");
 
         long other = totalPrice - priceTop1 - priceTop2 - priceTop3;
 
@@ -228,10 +252,10 @@ public class StatisticActivity extends AppCompatActivity {
 //        for (int i = 0; i < 4; i++) {
 //            entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
 //        }
-        entries.add(new PieEntry((float) priceTop1,nameTop1));
-        entries.add(new PieEntry((float) priceTop2,nameTop2));
-        entries.add(new PieEntry((float) priceTop3,nameTop3));
-        entries.add(new PieEntry((float) other,"Other"));
+        entries.add(new PieEntry((float) priceTop1, nameTop1));
+        entries.add(new PieEntry((float) priceTop2, nameTop2));
+        entries.add(new PieEntry((float) priceTop3, nameTop3));
+        entries.add(new PieEntry((float) other, "Other"));
 
         PieDataSet d = new PieDataSet(entries, "");
 
