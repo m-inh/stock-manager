@@ -1,13 +1,17 @@
 package com.uet.stockmanager.activities;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +32,18 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 import com.uet.stockmanager.R;
+import com.uet.stockmanager.application.AppController;
 import com.uet.stockmanager.charts.BarChartItem;
 import com.uet.stockmanager.charts.ChartItem;
 import com.uet.stockmanager.charts.LineChartItem;
 import com.uet.stockmanager.charts.PieChartItem;
 import com.uet.stockmanager.dialogs.AddProductDialog;
+import com.uet.stockmanager.models.Sale;
+import com.uet.stockmanager.models.SaleDao;
+
+import org.greenrobot.greendao.database.Database;
+import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +53,7 @@ import butterknife.ButterKnife;
 
 public class StatisticActivity extends AppCompatActivity {
 
+    private static final String TAG = "StatisticActivity";
     @BindView(R.id.lv_main)
     ListView lvChart;
 
@@ -182,12 +194,44 @@ public class StatisticActivity extends AppCompatActivity {
      */
     private PieData generateDataPie(int cnt) {
         // todo: query data from db
+        SaleDao saleDao = ((AppController)getApplication()).getDaoSession().getSaleDao();
+        //List<Sale> saleList = saleDao.queryRawCreate("SELECT PRODUCT_ID, SUM(PRICE) FROM SALE GROUP BY PRODUCT_ID").list();
+        Database db = ((AppController)getApplication()).getDaoSession().getDatabase();
+        Cursor cursor = db.rawQuery("SELECT PRODUCT_ID, SUM(PRICE) FROM SALE GROUP BY PRODUCT_ID ORDER BY PRICE DESC",new String[]{});
+
+        cursor.moveToFirst();
+        long totalPrice = 0;
+        while (cursor.isAfterLast() == false){
+            totalPrice += cursor.getLong(1);
+            cursor.moveToNext();
+        }
+        cursor.moveToFirst();
+        Log.i(TAG,"Tổng bán ra: " + totalPrice + " (VND)");
+
+        cursor.moveToFirst();
+        String nameTop1 = saleDao.load(cursor.getLong(0)).getName();
+        long priceTop1 = cursor.getLong(1);
+        Log.i(TAG,"Top 1: " + nameTop1 + " (VND)");
+        cursor.moveToNext();
+        String nameTop2 = saleDao.load(cursor.getLong(0)).getName();
+        long priceTop2 = cursor.getLong(1);
+        Log.i(TAG,"Top 2: " + priceTop2 + " (VND)");
+        cursor.moveToNext();
+        String nameTop3 = saleDao.load(cursor.getLong(0)).getName();
+        long priceTop3 = cursor.getLong(1);
+        Log.i(TAG,"Top 3: " + priceTop3 + " (VND)");
+
+        long other = totalPrice - priceTop1 - priceTop2 - priceTop3;
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        for (int i = 0; i < 4; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
-        }
+//        for (int i = 0; i < 4; i++) {
+//            entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
+//        }
+        entries.add(new PieEntry((float) priceTop1,nameTop1));
+        entries.add(new PieEntry((float) priceTop2,nameTop2));
+        entries.add(new PieEntry((float) priceTop3,nameTop3));
+        entries.add(new PieEntry((float) other,"Other"));
 
         PieDataSet d = new PieDataSet(entries, "");
 
