@@ -7,37 +7,83 @@
     tools:context="com.uet.stockmanager.activities.MainActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:id="@+id/tb_main_activity"
-        android:minHeight="?attr/actionBarSize">
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <Button
-            android:id="@+id/btn_product"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/product"/>
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_sale"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/sale"/>
+            android:layout_height="210dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_stock" />
 
-        <Button
-            android:id="@+id/btn_statistic"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/statistic"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:elevation="8dp">
+
+            <Button
+                android:id="@+id/btn_product"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/holo_blue_dark"
+                android:drawableLeft="@mipmap/ic_product_tag"
+                android:drawablePadding="-95dp"
+                android:paddingLeft="100dp"
+                android:text="@string/product"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:elevation="8dp">
+
+            <Button
+                android:id="@+id/btn_sale"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/holo_green_dark"
+                android:drawableLeft="@mipmap/ic_sale_tag"
+                android:drawablePadding="-125dp"
+                android:paddingLeft="100dp"
+                android:text="@string/sale"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:elevation="8dp">
+
+            <Button
+                android:id="@+id/btn_statistic"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/holo_purple"
+                android:drawableLeft="@mipmap/ic_stock_tag"
+                android:drawablePadding="-125dp"
+                android:paddingLeft="100dp"
+                android:text="@string/statistic"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
 </LinearLayout>
