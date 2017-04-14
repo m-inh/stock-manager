@@ -13,11 +13,12 @@ public class Product {
 
     private String name;
     private String category;
-    private int price;
-    private int quantity;
+    private Long price;
+    private Long quantity;
 
-    @Generated(hash = 1044754413)
-    public Product(Long id, String name, String category, int price, int quantity) {
+    @Generated(hash = 1902748641)
+    public Product(Long id, String name, String category, Long price,
+            Long quantity) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -53,19 +54,19 @@ public class Product {
         this.category = category;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return this.price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public long getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

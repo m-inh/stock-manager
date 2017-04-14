@@ -136,7 +136,7 @@ public class SaleActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(CommonVls.SALE_ACTIVITY_ADD_NEW_SALE)){
                 long productID = intent.getLongExtra(CommonVls.SALE_ACTIVITY_ADD_PRODUCT_ID_SALE,1);
-                int quanlity = intent.getIntExtra(CommonVls.SALE_ACTIVITY_ADD_QUANLITY_SALE,1);
+                long quanlity = intent.getLongExtra(CommonVls.SALE_ACTIVITY_ADD_QUANLITY_SALE,1);
                 long timeSale = intent.getLongExtra(CommonVls.SALE_ACTIVITY_ADD_TIME_SALE,1);
 
                 Sale sale = new Sale();
@@ -145,7 +145,7 @@ public class SaleActivity extends AppCompatActivity {
                 ProductDao productDao = ((AppController)getApplicationContext()).getDaoSession().getProductDao();
 
                 Product p = productDao.load(productID);
-                int totalPrice = p.getPrice()*quanlity;
+                long totalPrice = p.getPrice()*quanlity;
                 String name = p.getName();
                 sale.setPrice(totalPrice);
                 sale.setName(name);

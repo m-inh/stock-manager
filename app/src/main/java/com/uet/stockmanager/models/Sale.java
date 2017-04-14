@@ -15,10 +15,10 @@ public class Sale {
 
     private Long timestamp;
     private String name;
-    private int quanlity;
-    private int price;
+    private Long quanlity;
+    private Long price;
 
-    private long productId;
+    private Long productId;
 
     @ToOne(joinProperty = "productId")
     private Product product;
@@ -31,12 +31,9 @@ public class Sale {
     @Generated(hash = 595863298)
     private transient SaleDao myDao;
 
-    @Generated(hash = 587652864)
-    private transient Long product__resolvedKey;
-
-    @Generated(hash = 316749745)
-    public Sale(Long id, Long timestamp, String name, int quanlity, int price,
-            long productId) {
+    @Generated(hash = 1243644270)
+    public Sale(Long id, Long timestamp, String name, Long quanlity, Long price,
+            Long productId) {
         this.id = id;
         this.timestamp = timestamp;
         this.name = name;
@@ -48,6 +45,9 @@ public class Sale {
     @Generated(hash = 983461670)
     public Sale() {
     }
+
+    @Generated(hash = 587652864)
+    private transient Long product__resolvedKey;
 
     public Long getId() {
         return this.id;
@@ -73,34 +73,34 @@ public class Sale {
         this.name = name;
     }
 
-    public int getQuanlity() {
+    public Long getQuanlity() {
         return this.quanlity;
     }
 
-    public void setQuanlity(int quanlity) {
+    public void setQuanlity(Long quanlity) {
         this.quanlity = quanlity;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return this.price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public long getProductId() {
+    public Long getProductId() {
         return this.productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 926515087)
+    @Generated(hash = 1198864293)
     public Product getProduct() {
-        long __key = this.productId;
+        Long __key = this.productId;
         if (product__resolvedKey == null || !product__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
@@ -117,15 +117,11 @@ public class Sale {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1202438341)
-    public void setProduct(@NotNull Product product) {
-        if (product == null) {
-            throw new DaoException(
-                    "To-one property 'productId' has not-null constraint; cannot set to-one to null");
-        }
+    @Generated(hash = 558738496)
+    public void setProduct(Product product) {
         synchronized (this) {
             this.product = product;
-            productId = product.getId();
+            productId = product == null ? null : product.getId();
             product__resolvedKey = productId;
         }
     }
@@ -172,5 +168,4 @@ public class Sale {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getSaleDao() : null;
     }
-
 }

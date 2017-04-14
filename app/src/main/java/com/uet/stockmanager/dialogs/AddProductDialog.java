@@ -57,8 +57,8 @@ public class AddProductDialog extends Dialog {
                 }
                 String name = edtName.getText().toString();
                 String category = edtCategory.getText().toString();
-                int price = Integer.parseInt(edtPrice.getText().toString());
-                int quantity = Integer.parseInt(edtQuanlity.getText().toString());
+                long price = Long.parseLong(edtPrice.getText().toString());
+                long quantity = Long.parseLong(edtQuanlity.getText().toString());
 
                 Intent mIntent = new Intent(CommonVls.PRODUCT_ACTIVITY_ADD_NEW_PRODUCT);
                 mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_NAME_PRODUCT,name);

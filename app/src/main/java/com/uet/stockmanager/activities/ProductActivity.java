@@ -164,8 +164,8 @@ public class ProductActivity extends AppCompatActivity {
             if (intent.getAction().equals(CommonVls.PRODUCT_ACTIVITY_ADD_NEW_PRODUCT)) {
                 String name = intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_NAME_PRODUCT);
                 String category = intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_CATEGORY_PRODUCT);
-                int price = intent.getIntExtra(CommonVls.PRODUCT_ACTIVITY_ADD_PRICE_PRODUCT, 1);
-                int quanlity = intent.getIntExtra(CommonVls.PRODUCT_ACTIVITY_ADD_QUANLITY_PRODUCT, 1);
+                long price = intent.getLongExtra(CommonVls.PRODUCT_ACTIVITY_ADD_PRICE_PRODUCT, 1);
+                long quanlity = intent.getLongExtra(CommonVls.PRODUCT_ACTIVITY_ADD_QUANLITY_PRODUCT, 1);
 
                 Product product = new Product();
                 product.setName(name);
@@ -177,7 +177,7 @@ public class ProductActivity extends AppCompatActivity {
             }
 
             if (intent.getAction().equals(CommonVls.PRODUCT_ACTIVITY_UPDATE_PRODUCT)) {
-                int quanlity = Integer.parseInt(intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_MORE));
+                long quanlity = Long.parseLong(intent.getStringExtra(CommonVls.PRODUCT_ACTIVITY_ADD_MORE));
                 productTemp.setQuantity(productTemp.getQuantity() + quanlity);
                 addMoreProduct(productTemp);
 
