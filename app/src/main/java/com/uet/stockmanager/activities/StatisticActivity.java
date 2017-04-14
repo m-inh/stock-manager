@@ -116,6 +116,7 @@ public class StatisticActivity extends AppCompatActivity {
      * @return
      */
     private LineData generateDataLine(int cnt) {
+        // todo: query data from db
 
         ArrayList<Entry> e1 = new ArrayList<Entry>();
 
@@ -157,6 +158,7 @@ public class StatisticActivity extends AppCompatActivity {
      * @return
      */
     private BarData generateDataBar(int cnt) {
+        // todo: query data from db
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
 
@@ -179,6 +181,7 @@ public class StatisticActivity extends AppCompatActivity {
      * @return
      */
     private PieData generateDataPie(int cnt) {
+        // todo: query data from db
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 

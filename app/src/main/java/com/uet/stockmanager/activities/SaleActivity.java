@@ -151,6 +151,7 @@ public class SaleActivity extends AppCompatActivity {
                 sale.setName(name);
                 sale.setTimestamp(timeSale);
                 sale.setProductId(productID);
+
                 insertSale(sale);
 
             }
