@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.Utils;
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.charts.BarChartItem;
 import com.uet.stockmanager.charts.ChartItem;
@@ -58,6 +59,9 @@ public class StatisticActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Thống kê");
+
+        // init chart before add any data to it
+        Utils.init(this);
 
         initViews();
     }
@@ -115,7 +119,7 @@ public class StatisticActivity extends AppCompatActivity {
 
         ArrayList<Entry> e1 = new ArrayList<Entry>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 1; i <= 12; i++) {
             e1.add(new Entry(i, (int) (Math.random() * 65) + 40));
         }
 
@@ -127,8 +131,8 @@ public class StatisticActivity extends AppCompatActivity {
 
         ArrayList<Entry> e2 = new ArrayList<Entry>();
 
-        for (int i = 0; i < 12; i++) {
-            e2.add(new Entry(i, e1.get(i).getY() - 30));
+        for (int i = 1; i <= 12; i++) {
+            e2.add(new Entry(i, e1.get(i-1).getY() - 30));
         }
 
         LineDataSet d2 = new LineDataSet(e2, "New DataSet " + cnt + ", (2)");
@@ -156,7 +160,7 @@ public class StatisticActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 1; i <= 12; i++) {
             entries.add(new BarEntry(i, (int) (Math.random() * 70) + 30));
         }
 

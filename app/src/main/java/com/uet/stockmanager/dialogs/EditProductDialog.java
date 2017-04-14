@@ -44,7 +44,8 @@ public class EditProductDialog extends Dialog{
             @Override
             public void onClick(View v) {
                 if(edtEditText.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"Số lượng hàng nhập không đúng!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(),"Số lượng hàng nhập không đúng!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 Intent mIntent = new Intent(CommonVls.PRODUCT_ACTIVITY_UPDATE_PRODUCT);
                 mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_MORE,String.valueOf(edtEditText.getText().toString()));

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/product_id"
-            android:inputType="phone" />
+            android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -26,6 +26,7 @@
         <EditText
             android:id="@+id/edt_add_sale_quanlity"
             android:layout_width="match_parent"
+            android:inputType="number"
             android:layout_height="wrap_content"
             android:hint="@string/product_quantity" />
     </android.support.design.widget.TextInputLayout>

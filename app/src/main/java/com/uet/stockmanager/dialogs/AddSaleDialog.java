@@ -56,12 +56,12 @@ public class AddSaleDialog extends Dialog {
             public void onClick(View v) {
 
                 if (edtProductID.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "Product ID cann't be empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Mã sản phẩm không được để trống!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (edtQuanlity.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "Quantity cann't be empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Số lượng bán không được để trống!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -73,12 +73,12 @@ public class AddSaleDialog extends Dialog {
                 Product p = productDao.queryBuilder().where(ProductDao.Properties.Id.eq(productID)).unique();
 
                 if (p == null) {
-                    Toast.makeText(getContext(), "ProductID  isn't exist", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Mã sản phẩm không tồn tại!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 long quanlityProductAfterSale = p.getQuantity() - quantity;
                 if (quanlityProductAfterSale < 0) {
-                    Toast.makeText(getContext(), "The product in stock is not enough, re-enter the quantity", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Sản phẩm trong kho không đủ!", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     p.setQuantity(quanlityProductAfterSale);

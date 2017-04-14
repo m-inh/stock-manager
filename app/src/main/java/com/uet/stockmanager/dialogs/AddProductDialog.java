@@ -40,19 +40,19 @@ public class AddProductDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if(edtName.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"Name cann't be empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Tên không được để trống!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(edtCategory.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"Category cann't be empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Loại không được để trống!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(edtPrice.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"Price cann't be empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Giá bán không được để trống!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(edtQuanlity.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"Quantity cann't be empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Số lượng hàng không được để trống!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String name = edtName.getText().toString();
