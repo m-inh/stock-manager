@@ -60,7 +60,7 @@ public class SaleAdapter extends BaseAdapter {
         }
 
         Sale sale = saleList.get(position);
-        holder.tvTimeStamp.setText("Thời gian bán: " + getDate(sale.getTimestamp(),"hh:mm dd/MM/yyyy"));
+        holder.tvTimeStamp.setText("Thời gian bán: " + getDate(sale.getTimestamp(),"dd/MM/yyyy"));
         holder.tvQuantity.setText("Số lượng bán: " + sale.getQuanlity());
         holder.tvPrice.setText("Tổng giá bán: " + sale.getPrice() + "VND");
         holder.tvName.setText(String.valueOf(sale.getName()));
