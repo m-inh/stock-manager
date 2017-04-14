@@ -23,8 +23,7 @@
             android:id="@+id/lv_list_sale"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:padding="10dp"/>
+            android:divider="@null"/>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

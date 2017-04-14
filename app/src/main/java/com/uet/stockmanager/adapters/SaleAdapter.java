@@ -53,6 +53,7 @@ public class SaleAdapter extends BaseAdapter {
             holder.tvQuantity = (TextView) convertView.findViewById(R.id.tv_sale_quanlity);
             holder.tvPrice = (TextView) convertView.findViewById(R.id.tv_sale_price);
             holder.tvTimeStamp = (TextView) convertView.findViewById(R.id.tv_time);
+            holder.tvPId = (TextView) convertView.findViewById(R.id.tv_product_id);
             convertView.setTag(holder);
         } else {
             holder = (SaleAdapter.ViewHolder) convertView.getTag();
@@ -63,6 +64,7 @@ public class SaleAdapter extends BaseAdapter {
         holder.tvQuantity.setText("Số lượng bán: " + sale.getQuanlity());
         holder.tvPrice.setText("Tổng giá bán: " + sale.getPrice() + "VND");
         holder.tvName.setText(String.valueOf(sale.getName()));
+        holder.tvPId.setText("Mã sản phẩm: " + sale.getProductId());
 
         return convertView;
     }
@@ -81,5 +83,6 @@ public class SaleAdapter extends BaseAdapter {
         TextView tvQuantity;
         TextView tvPrice;
         TextView tvTimeStamp;
+        TextView tvPId;
     }
 }
