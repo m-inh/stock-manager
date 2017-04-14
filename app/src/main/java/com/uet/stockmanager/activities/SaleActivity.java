@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.uet.stockmanager.R;
 import com.uet.stockmanager.adapters.SaleAdapter;
@@ -115,6 +116,9 @@ public class SaleActivity extends AppCompatActivity {
 
     private void insertSale(Sale sale){
         saleDao.insert(sale);
+
+        Toast.makeText(this, "Thêm hóa đơn mới thành công", Toast.LENGTH_SHORT).show();
+
         updateListSale();
     }
 

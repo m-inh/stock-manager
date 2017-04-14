@@ -142,11 +142,15 @@ public class ProductActivity extends AppCompatActivity {
     private void insertListProduct(Product product) {
         pDao.insert(product);
 
+        Toast.makeText(this, "Thêm sản phẩm mới thành công", Toast.LENGTH_SHORT).show();
+
         updateListProduct();
     }
 
     private void addMoreProduct(Product product) {
         pDao.update(product);
+
+        Toast.makeText(this, "Cập nhật số lượng thành công", Toast.LENGTH_SHORT).show();
 
         updateListProduct();
     }

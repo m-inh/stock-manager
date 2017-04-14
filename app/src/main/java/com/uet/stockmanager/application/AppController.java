@@ -223,6 +223,9 @@ public class AppController extends Application {
         //insertSale for 12 months
 
         insertSale(p1, p1_id, 2, "1491826605193"); // 10/4/2017
+        insertSale(p1, p1_id, 1, "1491826605193"); // 10/4/2017
+        insertSale(p1, p1_id, 2, "1491826605193"); // 10/4/2017
+        insertSale(p1, p1_id, 2, "1491826605193"); // 10/4/2017
         insertSale(p16, p16_id, 6, "1491581353822"); // 7/4/2017
         insertSale(p7, p7_id, 10, "1491062985803"); // 1/4/2017
         insertSale(p4, p4_id, 2, "1491568881227"); // 7/04/2017

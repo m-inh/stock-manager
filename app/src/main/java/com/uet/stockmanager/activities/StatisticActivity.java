@@ -48,6 +48,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -138,15 +139,34 @@ public class StatisticActivity extends AppCompatActivity {
      * @return
      */
     private LineData generateDataLine(int cnt) {
-        // todo: query data from db
-
         ArrayList<Entry> e1 = new ArrayList<Entry>();
 
-        for (int i = 1; i <= 12; i++) {
-            e1.add(new Entry(i, (int) (Math.random() * 65) + 40));
+        for (int i = 11; i >= 0; i--) {
+            // get sales in target month
+            Calendar now = Calendar.getInstance();
+            Calendar pivotTime = Calendar.getInstance();
+            int nowMonth = now.get(Calendar.MONTH);
+
+            pivotTime.set(pivotTime.get(Calendar.YEAR), pivotTime.get(Calendar.MONTH), 1);
+
+            long upTime = 0;
+            long downTime = 0;
+
+            if (i == 0) {
+                upTime = now.getTimeInMillis();
+                downTime = pivotTime.getTimeInMillis();
+            } else {
+                upTime = getTimeMiliBeforeMonth(pivotTime, i - 1);
+                downTime = getTimeMiliBeforeMonth(pivotTime, i);
+            }
+
+            //query db
+            int salesInMonth = countSalesBetweenTime(upTime, downTime);
+
+            e1.add(new Entry(12 - i, salesInMonth));
         }
 
-        LineDataSet d1 = new LineDataSet(e1, "New DataSet " + cnt + ", (1)");
+        LineDataSet d1 = new LineDataSet(e1, "Số lượng đơn hàng");
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4.5f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
@@ -154,11 +174,30 @@ public class StatisticActivity extends AppCompatActivity {
 
         ArrayList<Entry> e2 = new ArrayList<Entry>();
 
-        for (int i = 1; i <= 12; i++) {
-            e2.add(new Entry(i, e1.get(i - 1).getY() - 30));
+        for (int i = 11; i >= 0; i--) {
+            // get sales in target month
+            Calendar now = Calendar.getInstance();
+            Calendar pivotTime = Calendar.getInstance();
+            pivotTime.set(pivotTime.get(Calendar.YEAR), pivotTime.get(Calendar.MONTH), 1);
+
+            long upTime = 0;
+            long downTime = 0;
+
+            if (i == 0) {
+                upTime = now.getTimeInMillis();
+                downTime = pivotTime.getTimeInMillis();
+            } else {
+                upTime = getTimeMiliBeforeMonth(pivotTime, i - 1);
+                downTime = getTimeMiliBeforeMonth(pivotTime, i);
+            }
+
+            //query db
+            int totalProductInMonth = countProductIsSaledBetweenTime(upTime, downTime);
+
+            e2.add(new Entry(12 - i, totalProductInMonth));
         }
 
-        LineDataSet d2 = new LineDataSet(e2, "New DataSet " + cnt + ", (2)");
+        LineDataSet d2 = new LineDataSet(e2, "Số lượng sản phẩm bán");
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4.5f);
         d2.setHighLightColor(Color.rgb(244, 117, 117));
@@ -174,27 +213,111 @@ public class StatisticActivity extends AppCompatActivity {
         return cd;
     }
 
+    private int countProductIsSaledBetweenTime(long upTime, long downTime) {
+        String[] values = {downTime + "", upTime + ""};
+
+        Database db = ((AppController) getApplication()).getDaoSession().getDatabase();
+        Cursor cursor = db.rawQuery("SELECT PRODUCT_ID FROM SALE WHERE (TIMESTAMP >= ?) AND (TIMESTAMP <= ?) GROUP BY PRODUCT_ID", values);
+
+        int result = cursor.getCount();
+        cursor.close();
+
+        return result;
+    }
+
+    private int countSalesBetweenTime(long upTime, long downTime) {
+        String[] values = {downTime + "", upTime + ""};
+
+        Database db = ((AppController) getApplication()).getDaoSession().getDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) AS total_sales FROM SALE WHERE (TIMESTAMP >= ?) AND (TIMESTAMP <= ?)", values);
+
+        int total_sales_index = cursor.getColumnIndex("total_sales");
+
+        if (cursor.getCount() == 0) {
+            return 0;
+        }
+
+        cursor.moveToFirst();
+        int result = cursor.getInt(total_sales_index);
+        cursor.close();
+
+        return result;
+    }
+
+    private long getTimeMiliBeforeMonth(Calendar pivot, int beforeMonth) {
+        int targetMonth = pivot.get(Calendar.MONTH) - beforeMonth;
+        int targetYear = pivot.get(Calendar.YEAR);
+        int targetDate = pivot.get(Calendar.DATE);
+
+        if (targetMonth < 1) {
+            targetMonth = 12 + targetMonth;
+            targetYear--;
+        }
+
+        pivot.set(targetYear, targetMonth, targetDate);
+        return pivot.getTimeInMillis();
+    }
+
     /**
      * generates a random ChartData object with just one DataSet
      *
      * @return
      */
     private BarData generateDataBar(int cnt) {
-        // todo: query data from db
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
 
-        for (int i = 1; i <= 12; i++) {
-            entries.add(new BarEntry(i, (int) (Math.random() * 70) + 30));
+        for (int i = 11; i >= 0; i--) {
+            // get sales in target month
+            Calendar now = Calendar.getInstance();
+            Calendar pivotTime = Calendar.getInstance();
+            int nowMonth = now.get(Calendar.MONTH);
+
+            pivotTime.set(pivotTime.get(Calendar.YEAR), pivotTime.get(Calendar.MONTH), 1);
+
+            long upTime = 0;
+            long downTime = 0;
+
+            if (i == 0) {
+                upTime = now.getTimeInMillis();
+                downTime = pivotTime.getTimeInMillis();
+            } else {
+                upTime = getTimeMiliBeforeMonth(pivotTime, i - 1);
+                downTime = getTimeMiliBeforeMonth(pivotTime, i);
+            }
+
+            //query db
+            long moneyInMonth = countMoneyBetweenTime(upTime, downTime);
+
+            entries.add(new BarEntry(12 - i, (int) moneyInMonth));
         }
 
-        BarDataSet d = new BarDataSet(entries, "New DataSet " + cnt);
+        BarDataSet d = new BarDataSet(entries, "Doanh số");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setHighLightAlpha(255);
 
         BarData cd = new BarData(d);
         cd.setBarWidth(0.9f);
         return cd;
+    }
+
+    private long countMoneyBetweenTime(long upTime, long downTime) {
+        String[] values = {downTime + "", upTime + ""};
+
+        Database db = ((AppController) getApplication()).getDaoSession().getDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS total_money FROM SALE WHERE (TIMESTAMP >= ?) AND (TIMESTAMP <= ?)", values);
+
+        int total_money_index = cursor.getColumnIndex("total_money");
+
+        if (cursor.getCount() == 0) {
+            return 0;
+        }
+
+        cursor.moveToFirst();
+        long result = cursor.getLong(total_money_index);
+        cursor.close();
+
+        return result;
     }
 
     /**
