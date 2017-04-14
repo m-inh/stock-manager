@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">Stock Manager</string>
-    <string name="product">Product</string>
-    <string name="sale">Sale</string>
+    <string name="product">KHO SẢN PHẨM</string>
+    <string name="sale">BÁN HÀNG</string>
     <string name="order">Order</string>
-    <string name="statistic">Statistic</string>
-    <string name="product_name">Name</string>
-    <string name="product_category">Category</string>
-    <string name="product_id">Product ID</string>
-    <string name="product_price">Price</string>
-    <string name="product_quantity">Quantity</string>
-    <string name="add_product">Add Product</string>
-    <string name="update">Update</string>
-    <string name="add_more">Add More</string>
+    <string name="statistic">THỐNG KÊ</string>
+    <string name="product_name">Tên</string>
+    <string name="product_category">Thể loại</string>
+    <string name="product_id">Mã sản phẩm</string>
+    <string name="product_price">Giá</string>
+    <string name="product_quantity">Số lượng bán</string>
+    <string name="add_product">THÊM SẢN PHẨM</string>
+    <string name="update">Cập nhật</string>
+    <string name="add_more">Số lượng thêm</string>
     <string name="sale_name">Name</string>
     <string name="time_sale">Time Sale</string>
-    <string name="add_sale">Add Sale</string>
+    <string name="add_sale">THÊM ĐƠN HÀNG</string>
 </resources>

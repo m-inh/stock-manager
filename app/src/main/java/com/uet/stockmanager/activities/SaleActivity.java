@@ -9,12 +9,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.uet.stockmanager.R;
@@ -40,6 +42,8 @@ public class SaleActivity extends AppCompatActivity {
 
     @BindView(R.id.tb_sale_activity)
     Toolbar toolbar;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
     @BindView(R.id.lv_list_sale)
     ListView lvListSale;
 
@@ -60,7 +64,18 @@ public class SaleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Sale");
+        getSupportActionBar().setTitle("Bán hàng");
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddSaleDialog addSaleDialog = new AddSaleDialog(SaleActivity.this, R.style.PauseDialogAnimation);
+                addSaleDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+                addSaleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                addSaleDialog.setTitle("");
+                addSaleDialog.show();
+            }
+        });
 
         saleDao = ((AppController) getApplication()).getDaoSession().getSaleDao();
         saleList = saleDao.queryBuilder().list();
@@ -74,25 +89,25 @@ public class SaleActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sale_activity, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.sale_activity, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.menu_add_sale:
-                AddSaleDialog addSaleDialog = new AddSaleDialog(this, R.style.PauseDialogAnimation);
-                addSaleDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-                addSaleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                addSaleDialog.setTitle("");
-                addSaleDialog.show();
+//            case R.id.menu_add_sale:
+//                AddSaleDialog addSaleDialog = new AddSaleDialog(this, R.style.PauseDialogAnimation);
+//                addSaleDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+//                addSaleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                addSaleDialog.setTitle("");
+//                addSaleDialog.show();
+//                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -117,7 +132,6 @@ public class SaleActivity extends AppCompatActivity {
 
 
     private class MyBroadcast extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(CommonVls.SALE_ACTIVITY_ADD_NEW_SALE)){

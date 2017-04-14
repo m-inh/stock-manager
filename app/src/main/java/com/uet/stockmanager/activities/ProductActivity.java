@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,6 +43,9 @@ public class ProductActivity extends AppCompatActivity {
     ListView lvMain;
     @BindView(R.id.tb_product_activity)
     Toolbar toolbar;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAdd;
+
 
     private ProductDao pDao;
     private List<Product> productList;
@@ -59,7 +63,7 @@ public class ProductActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Products");
+        getSupportActionBar().setTitle("Kho sản phẩm");
 
         pDao = ((AppController) getApplication()).getDaoSession().getProductDao();
         productList = pDao.queryBuilder().list();
@@ -68,17 +72,32 @@ public class ProductActivity extends AppCompatActivity {
         lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Product product = productList.get(position);
+
                 EditProductDialog editProductDialog = new EditProductDialog(ProductActivity.this, R.style.PauseDialogAnimation);
+                editProductDialog.setpName(product.getName());
+                editProductDialog.setpId(product.getId() + "");
                 editProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
                 editProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                Product product = productList.get(position);
-                Log.i(TAG, "Product name: " + product.getName());
-                Toast.makeText(ProductActivity.this, "Add more " + product.getName(), Toast.LENGTH_LONG).show();
+
+                Log.d(TAG, "Product name: " + product.getName());
+//                Toast.makeText(ProductActivity.this, "Add more " + product.getName(), Toast.LENGTH_LONG).show();
                 productTemp = product;
 
-                Log.i(TAG, productTemp.getName());
+                Log.d(TAG, productTemp.getName());
                 editProductDialog.setTitle("");
                 editProductDialog.show();
+            }
+        });
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddProductDialog addProductDialog = new AddProductDialog(ProductActivity.this, R.style.PauseDialogAnimation);
+                addProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+                addProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                addProductDialog.setTitle("");
+                addProductDialog.show();
             }
         });
 
@@ -89,23 +108,23 @@ public class ProductActivity extends AppCompatActivity {
         this.registerReceiver(addNewProduct, filter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.product_activity, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.product_activity, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add_product:
-                AddProductDialog addProductDialog = new AddProductDialog(this, R.style.PauseDialogAnimation);
-                addProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-                addProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                addProductDialog.setTitle("");
-                addProductDialog.show();
+//            case R.id.menu_add_product:
+//                AddProductDialog addProductDialog = new AddProductDialog(this, R.style.PauseDialogAnimation);
+//                addProductDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+//                addProductDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                addProductDialog.setTitle("");
+//                addProductDialog.show();
 
-                break;
+//                break;
             case android.R.id.home:
                 finish();
                 break;

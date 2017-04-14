@@ -59,9 +59,9 @@ public class ProductAdapter extends BaseAdapter {
 
         Product product = this.pList.get(position);
         holder.tvName.setText(product.getName());
-        holder.tvCategory.setText("Loại: " + product.getCategory());
+        holder.tvCategory.setText("Thể loại: " + product.getCategory());
         holder.tvQuantity.setText("Số Lượng: " + product.getQuantity());
-        holder.tvPrice.setText("Giá nhập: " + product.getPrice() + "VND");
+        holder.tvPrice.setText("Giá bán: " + product.getPrice() + " (VNĐ)");
         holder.tvProductID.setText("Mã sản phẩm: " + product.getId());
 
         return convertView;

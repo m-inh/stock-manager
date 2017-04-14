@@ -57,7 +57,7 @@ public class StatisticActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Statistic");
+        getSupportActionBar().setTitle("Thống kê");
 
         initViews();
     }

@@ -4,6 +4,7 @@ package com.uet.stockmanager.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
@@ -22,6 +23,11 @@ public class EditProductDialog extends Dialog{
 
     @BindView(R.id.edt_edit_product_quanlity) EditText edtEditText;
     @BindView(R.id.btn_edit_product) Button btnUpdateEdited;
+    @BindView(R.id.edt_product_name) EditText edtProductName;
+    @BindView(R.id.edt_product_id) EditText edtProductId;
+
+    private String pName;
+    private String pId;
 
     public EditProductDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
@@ -38,7 +44,7 @@ public class EditProductDialog extends Dialog{
             @Override
             public void onClick(View v) {
                 if(edtEditText.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"Quanlity cann't be empty!!!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(),"Số lượng hàng nhập không đúng!", Toast.LENGTH_SHORT);
                 }
                 Intent mIntent = new Intent(CommonVls.PRODUCT_ACTIVITY_UPDATE_PRODUCT);
                 mIntent.putExtra(CommonVls.PRODUCT_ACTIVITY_ADD_MORE,String.valueOf(edtEditText.getText().toString()));
@@ -46,5 +52,30 @@ public class EditProductDialog extends Dialog{
                 dismiss();
             }
         });
+
+        edtProductName.setEnabled(false);
+        edtProductName.setText(pName);
+        edtProductId.setEnabled(false);
+        edtProductId.setText(pId);
+    }
+
+    public String getpName() {
+        return pName;
+    }
+
+    public void setpName(String pName) {
+        this.pName = pName;
+
+        if (edtProductName != null) edtProductName.setText(pName);
+    }
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
+
+        if (edtProductId != null) edtProductId.setText(pId);
     }
 }

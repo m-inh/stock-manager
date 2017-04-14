@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initViews();
 
         setSupportActionBar(toolBar);
-        toolBar.setTitle("Stock Manager");
+        getSupportActionBar().setTitle("Quản lí kho hàng");
     }
 
     private void initViews() {
