@@ -89,7 +89,7 @@ public class StatisticActivity extends AppCompatActivity {
 
     private void initViews() {
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
-        list.add(new LineChartItem(generateDataLine(1), getApplicationContext()));
+//        list.add(new LineChartItem(generateDataLine(1), getApplicationContext()));
         list.add(new BarChartItem(generateDataBar(2), getApplicationContext()));
         list.add(new PieChartItem(generateDataPie(3), getApplicationContext()));
 
@@ -267,29 +267,33 @@ public class StatisticActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
 
-        for (int i = 11; i >= 0; i--) {
-            // get sales in target month
-            Calendar now = Calendar.getInstance();
-            Calendar pivotTime = Calendar.getInstance();
-            int nowMonth = now.get(Calendar.MONTH);
+        Calendar now = Calendar.getInstance();
+        int monthToStart = now.get(Calendar.MONTH);
+        Log.i("statistic_act", now.getTime().toString());
+        int nowMonth = now.get(Calendar.MONTH);
 
-            pivotTime.set(pivotTime.get(Calendar.YEAR), pivotTime.get(Calendar.MONTH), 1);
+        for (int i = 0; i <= nowMonth; i++) {
+            // get sales in target month
 
             long upTime = 0;
             long downTime = 0;
 
-            if (i == 0) {
+            if (i == nowMonth) {
                 upTime = now.getTimeInMillis();
-                downTime = pivotTime.getTimeInMillis();
+                downTime = getTimeMiliInThisYear(i);
             } else {
-                upTime = getTimeMiliBeforeMonth(pivotTime, i - 1);
-                downTime = getTimeMiliBeforeMonth(pivotTime, i);
+                upTime = getTimeMiliInThisYear(i + 1);
+                downTime = getTimeMiliInThisYear(i);
             }
 
             //query db
             long moneyInMonth = countMoneyBetweenTime(upTime, downTime);
 
-            entries.add(new BarEntry(12 - i, (int) moneyInMonth));
+            entries.add(new BarEntry(i + 1, (int) moneyInMonth));
+        }
+
+        for (int i = nowMonth + 1; i <= 12; i++) {
+            entries.add(new BarEntry(i, 0));
         }
 
         BarDataSet d = new BarDataSet(entries, "Doanh số");
@@ -299,6 +303,13 @@ public class StatisticActivity extends AppCompatActivity {
         BarData cd = new BarData(d);
         cd.setBarWidth(0.9f);
         return cd;
+    }
+
+    private long getTimeMiliInThisYear(int targetMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(c.get(Calendar.YEAR), targetMonth, 1);
+
+        return c.getTimeInMillis();
     }
 
     private long countMoneyBetweenTime(long upTime, long downTime) {
@@ -326,55 +337,35 @@ public class StatisticActivity extends AppCompatActivity {
      * @return
      */
     private PieData generateDataPie(int cnt) {
-        Database db = ((AppController) getApplication()).getDaoSession().getDatabase();
-        Cursor cursor = db.rawQuery("SELECT PRODUCT_ID, SUM(PRICE) AS total_price FROM SALE GROUP BY PRODUCT_ID ORDER BY total_price DESC", new String[]{});
+        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        int total_price_index = cursor.getColumnIndex("total_price");
-        int product_id_index = cursor.getColumnIndex("PRODUCT_ID");
+        Calendar now = Calendar.getInstance();
+        Log.d("statistic_act", now.getTime().toString());
+        int nowMonth = now.get(Calendar.MONTH);
 
-        long totalPrice = 0;
-        long priceTop1 = 0;
-        long priceTop2 = 0;
-        long priceTop3 = 0;
+        for (int i = 0; i <= nowMonth; i++) {
+            // get sales in target month
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            totalPrice += cursor.getLong(total_price_index);
+            long upTime = 0;
+            long downTime = 0;
 
-            cursor.moveToNext();
+            if (i == nowMonth) {
+                upTime = now.getTimeInMillis();
+                downTime = getTimeMiliInThisYear(i);
+            } else {
+                upTime = getTimeMiliInThisYear(i + 1);
+                downTime = getTimeMiliInThisYear(i);
+            }
+
+            //query db
+            long moneyInMonth = countMoneyBetweenTime(upTime, downTime);
+
+            entries.add(new PieEntry((float) moneyInMonth, "Tháng " + (i + 1)));
         }
 
-        Log.i(TAG, "Tổng bán ra: " + totalPrice + " (VND)");
-
-        cursor.moveToFirst();
-
-        Product p_top_1 = pDao.load(cursor.getLong(product_id_index));
-        String nameTop1 = p_top_1.getName();
-        priceTop1 = cursor.getLong(total_price_index);
-        Log.i(TAG, "Top 1: " + nameTop1);
-        Log.i(TAG, "Top 1: " + priceTop1 + " (VND)");
-
-        cursor.moveToNext();
-        Product p_top_2 = pDao.load(cursor.getLong(product_id_index));
-        String nameTop2 = p_top_2.getName();
-        priceTop2 = cursor.getLong(total_price_index);
-        Log.i(TAG, "Top 2: " + nameTop2);
-        Log.i(TAG, "Top 2: " + priceTop2 + " (VND)");
-
-        cursor.moveToNext();
-        Product p_top_3 = pDao.load(cursor.getLong(product_id_index));
-        String nameTop3 = p_top_3.getName();
-        priceTop3 = cursor.getLong(total_price_index);
-        Log.i(TAG, "Top 3: " + nameTop3);
-        Log.i(TAG, "Top 3: " + priceTop3 + " (VND)");
-
-        long other = totalPrice - priceTop1 - priceTop2 - priceTop3;
-
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        entries.add(new PieEntry((float) priceTop1, nameTop1));
-        entries.add(new PieEntry((float) priceTop2, nameTop2));
-        entries.add(new PieEntry((float) priceTop3, nameTop3));
-        entries.add(new PieEntry((float) other, "Còn lại"));
+//        for (int i = nowMonth + 1; i <= 12; i++) {
+//            entries.add(new PieEntry((float) 0, "Tháng " + (i + 1)));
+//        }
 
         PieDataSet d = new PieDataSet(entries, "");
 

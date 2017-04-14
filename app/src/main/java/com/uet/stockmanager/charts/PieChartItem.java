@@ -27,7 +27,7 @@ public class PieChartItem extends ChartItem {
         super(cd);
 
         mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
-        mCenterText = generateCenterText();
+//        mCenterText = generateCenterText();
     }
 
     @Override
@@ -58,7 +58,8 @@ public class PieChartItem extends ChartItem {
         holder.chart.getDescription().setEnabled(false);
         holder.chart.setHoleRadius(52f);
         holder.chart.setTransparentCircleRadius(57f);
-        holder.chart.setCenterText(mCenterText);
+//        holder.chart.setCenterText(mCenterText);
+//        holder.chart.setEntryLabelColor(Color.BLACK);
         holder.chart.setCenterTextTypeface(mTf);
         holder.chart.setCenterTextSize(9f);
         holder.chart.setUsePercentValues(true);
@@ -86,16 +87,16 @@ public class PieChartItem extends ChartItem {
         return convertView;
     }
 
-    private SpannableString generateCenterText() {
-        SpannableString s = new SpannableString("MPAndroidChart\ncreated by\nPhilipp Jahoda");
-        s.setSpan(new RelativeSizeSpan(1.6f), 0, 14, 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.VORDIPLOM_COLORS[0]), 0, 14, 0);
-        s.setSpan(new RelativeSizeSpan(.9f), 14, 25, 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, 25, 0);
-        s.setSpan(new RelativeSizeSpan(1.4f), 25, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 25, s.length(), 0);
-        return s;
-    }
+//    private SpannableString generateCenterText() {
+//        SpannableString s = new SpannableString("Doanh thu");
+//        s.setSpan(new RelativeSizeSpan(1.6f), 0, 14, 0);
+//        s.setSpan(new ForegroundColorSpan(ColorTemplate.VORDIPLOM_COLORS[0]), 0, 14, 0);
+//        s.setSpan(new RelativeSizeSpan(.9f), 14, 25, 0);
+//        s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, 25, 0);
+//        s.setSpan(new RelativeSizeSpan(1.4f), 25, s.length(), 0);
+//        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 25, s.length(), 0);
+//        return s;
+//    }
 
     private static class ViewHolder {
         PieChart chart;
