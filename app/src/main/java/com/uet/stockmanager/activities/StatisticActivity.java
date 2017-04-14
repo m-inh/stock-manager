@@ -248,14 +248,10 @@ public class StatisticActivity extends AppCompatActivity {
         long other = totalPrice - priceTop1 - priceTop2 - priceTop3;
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-
-//        for (int i = 0; i < 4; i++) {
-//            entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
-//        }
         entries.add(new PieEntry((float) priceTop1, nameTop1));
         entries.add(new PieEntry((float) priceTop2, nameTop2));
         entries.add(new PieEntry((float) priceTop3, nameTop3));
-        entries.add(new PieEntry((float) other, "Other"));
+        entries.add(new PieEntry((float) other, "Còn lại"));
 
         PieDataSet d = new PieDataSet(entries, "");
 
