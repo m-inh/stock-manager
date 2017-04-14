@@ -251,7 +251,7 @@ public class StatisticActivity extends AppCompatActivity {
         entries.add(new PieEntry((float) priceTop1, nameTop1));
         entries.add(new PieEntry((float) priceTop2, nameTop2));
         entries.add(new PieEntry((float) priceTop3, nameTop3));
-        entries.add(new PieEntry((float) other, "Other"));
+        entries.add(new PieEntry((float) other, "Còn lại"));
 
         PieDataSet d = new PieDataSet(entries, "");
 
